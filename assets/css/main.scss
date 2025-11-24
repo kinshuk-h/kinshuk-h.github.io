@@ -1,0 +1,28 @@
+---
+---
+
+@import
+  "minima/skins/{{ site.minima.skin | default: 'classic' }}",
+  "minima/initialize";
+
+// Custom link color overrides — placed after imports so they take precedence
+$custom-link-color: #3134b8; // rebeccapurple
+$custom-link-hover: darken($custom-link-color, 15%);
+$custom-link-active: darken($custom-link-color, 25%);
+
+a,
+a:visited {
+  color: $custom-link-color;
+  text-decoration: underline;
+}
+
+a:hover,
+a:focus {
+  color: $custom-link-hover;
+  text-decoration: underline;
+  outline: none;
+}
+
+a:active {
+  color: $custom-link-active;
+}

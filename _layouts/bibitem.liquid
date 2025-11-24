@@ -1,0 +1,200 @@
+---
+---
+
+<div class="pubitem" id="{{entry.key}}">
+    <div class="row mb-4">
+    <div class="col-sm-3 abbr">
+      {%- if entry.abbr -%}
+        {%- if site.data.venues[entry.abbr] -%}
+          {% assign venue_style = null %}
+          {% if site.data.venues[entry.abbr].color != blank %}
+            {% assign venue_style = site.data.venues[entry.abbr].color | prepend: 'style="background-color:' | append: '"' %}
+          {%- endif -%}
+          <abbr
+            class="badge rounded w-100"
+            {% if venue_style %}
+              {{ venue_style }}
+            {% endif -%}
+          >
+            {% if site.data.venues[entry.abbr].url %}
+              <a href="{{ site.data.venues[entry.abbr].url }}">{{ entry.abbr }}</a>
+            {% else %}
+              <div>{{- entry.abbr -}}</div>
+            {% endif %}
+          </abbr>
+        {% else %}
+          <abbr class="badge rounded w-100">{{ entry.abbr }}</abbr>
+        {% endif %}
+      {% endif %}
+      {% if entry.img %}
+        {% if entry.img contains '://' %}
+          <img class="preview z-depth-1 rounded" src="{{ entry.img }}">
+        {% else %}
+          {% assign entry_path = entry.img | prepend: '/assets/img/pubs/' %}
+          {%
+            include figure.liquid
+            loading="eager"
+            path=entry_path
+            sizes = "200px"
+            class="preview z-depth-1 rounded"
+            zoomable=true
+            avoid_scaling=true
+            alt=entry.title
+          %}
+        {% endif %}
+      {% endif %}
+    </div>
+    <div class="col-sm-8" id="{{entry.key}}.root">
+        <td style="padding:8px;width:80%;vertical-align:middle" class="paper">
+        <a href="{{entry.url}}">
+            <span class="papertitle">{{entry.title}}</span>
+        </a>
+        <div>
+            <span>
+            {%- for author in entry.author_array -%}
+                {% assign author_is_self = false %}
+                {%- assign author_last_name = author.last | regex_replace: '[*∗†‡§¶‖&^]', '' -%}
+                {%- assign author_last_html = author.last | regex_replace: '([*∗†‡§¶‖&^]+)', '<sup>\1</sup>' -%}
+                {% if site.scholar.last_name contains author_last_name %}
+                    {% if site.scholar.first_name contains author.first %}
+                        {% assign author_is_self = true %}
+                    {% endif %}
+                {%- endif -%}
+                {%- assign clean_last_name = author_last_name | downcase | remove_accents -%}
+                {% assign coauthor_url = null %}
+                {%- assign clean_last_name = author_last_name | downcase | remove_accents -%}
+                {% if site.data.coauthors[clean_last_name] %}
+                {%- for coauthor in site.data.coauthors[clean_last_name] -%}
+                    {% if coauthor.firstname contains author.first %}
+                    {%- assign coauthor_url = coauthor.url -%}
+                    {% break %}
+                    {%- endif -%}
+                {% endfor %}
+                {%- endif -%}
+                {%- if forloop.length > 1 -%}
+                {% if forloop.first == false -%}
+                    {%- if forloop.length > 2 %}, {% elsif forloop.length == 2 %}  {% endif %}
+                {%- endif %}
+                {%- if forloop.last and author_array_limit == author_array_size %}and {% endif -%}
+                {% endif %}
+                {%- if author_is_self -%}
+                <strong>
+                    {{- author.first }}
+                    {{ author_last_html -}}
+                </strong>
+                {%- else -%}
+                {%- if coauthor_url -%}
+                    <a href="{{ coauthor_url }}">
+                    {{- author.first }}
+                    {{ author_last_html -}}
+                    </a>
+                {%- else -%}
+                    <span>
+                    {{- author.first }}
+                    {{ author_last_html -}}
+                    </span>
+                {% endif %}
+                {%- endif -%}
+            {%- endfor -%}
+            </span>
+        </div>
+        {% assign proceedings = 'inproceedings,incollection' | split: ',' %}
+        {% assign thesis = 'thesis,mastersthesis,phdthesis' | split: ',' %}
+        {% if entry.type == 'article' %}
+        {% capture entrytype %}<em>{{ entry.journal }}</em>{% endcapture %}
+        {% elsif proceedings contains entry.type %}
+        {% capture entrytype %}<em>In {{ entry.booktitle }}</em>{% endcapture %}
+        {% elsif thesis contains entry.type %}
+        {% capture entrytype %}<em>{{ entry.school }}</em>{% endcapture %}
+        {% else %}
+        {% capture entrytype %}{% endcapture %}
+        {% endif %}
+        {% if entry.month %}
+        {% capture entrymonth %}{{ " " }}{{ entry.month | capitalize }}{% endcapture %}
+        {% endif %}
+        {% if entry.year %}
+        {% capture entryyear %}{{ " " }}{{ entry.year }}{% endcapture %}
+        {% endif %}
+        {% if entry.location %}
+        {% capture entrytype %}{{ entrytype }}{{ ", " }}{{ entry.location }}{% endcapture %}
+        {% endif -%}
+        {% assign entrytype_text = entrytype | strip_html | strip %}
+        {% capture periodical %}{{ entrytype }}{% if entrytype_text != "" and entryyear != "" %}, {% endif %}{{ entrymonth }}{{ entryyear }}{% endcapture %}
+        <div class="periodical mb-1">
+        {{ periodical | strip }}
+        </div>
+        <div class="periodical mb-1">
+        {{ entry.note | strip }}
+        </div>
+        <div class="block mt-2 mb-1">
+            {{ entry.pitch }}
+        </div>
+        <div class="links">
+            <a class="abstract btn btn-sm z-depth-0" role="button" data-for="{{entry.key}}.abs" aria-expanded="false">Abstract</a>
+            {% if entry.award %}
+                <span>/</span>
+                <a class="award btn btn-sm z-depth-0" role="button">
+                {%- if entry.award_name %}{{ entry.award_name }}{% else %}Awarded{% endif -%}
+                </a>
+            {% endif %}
+            {% if entry.doi %}
+                <span>/</span>
+                <a href="https://doi.org/{{ entry.doi }}" class="btn btn-sm z-depth-0" role="button">DOI</a>
+            {% endif %}
+            {% if entry.arxiv %}
+                <span>/</span>
+                <a href="http://arxiv.org/abs/{{ entry.arxiv }}" class="btn btn-sm z-depth-0" role="button">arXiv</a>
+            {% endif %}
+            <span>/</span>
+            <a class="bibtex btn btn-sm z-depth-0" role="button" data-for="{{entry.key}}.bib" aria-expanded="false">Bibtex</a>
+            {% if entry.blog %}
+                <span>/</span>
+                <a href="{{ entry.blog }}" class="btn btn-sm z-depth-0" role="button">Blog</a>
+            {% endif %}
+            {% if entry.code %}
+                <span>/</span>
+                <a href="{{ entry.code }}" class="btn btn-sm z-depth-0" role="button">
+                    <i class="bi bi-github"></i>&nbsp;&nbsp;<span class="ml-5">Code</span>
+                </a>
+            {% endif %}
+            {% if entry.poster %}
+                <span>/</span>
+                {% if entry.poster contains '://' %}
+                <a href="{{ entry.poster }}" class="btn btn-sm z-depth-0" role="button">Poster</a>
+                {% else %}
+                <a href="{{ entry.poster | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">Poster</a>
+                {% endif %}
+            {% endif %}
+            {% if entry.slides %}
+                <span>/</span>
+                {% if entry.slides contains '://' %}
+                <a href="{{ entry.slides }}" class="btn btn-sm z-depth-0" role="button">Slides</a>
+                {% else %}
+                <a href="{{ entry.slides | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">Slides</a>
+                {% endif %}
+            {% endif %}
+            {% if entry.website %}
+                <span>/</span>
+                <a href="{{ entry.website }}" class="btn btn-sm z-depth-0" role="button">Page</a>
+            {% endif %}
+        </div>
+
+        {% if entry.abstract %}
+        <!-- Hidden abstract block -->
+        <div id="{{entry.key}}.abs" class="abstract hidden">
+            <p class="card">
+                <p class="card-body">{{ entry.abstract }}</p>
+            </p>
+        </div>
+        {% endif %}
+
+        <!-- Hidden bibtex block -->
+        <div id="{{entry.key}}.bib" class="bibtex hidden">
+            {% highlight bibtex %}
+            {{- entry.bibtex | hideCustomBibtex -}}
+            {% endhighlight %}
+        </div>
+        </td>
+    </div>
+    </div>
+</div>

@@ -1,0 +1,120 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+#
+# If you need help with YAML syntax, here are some quick references for you:
+# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
+# https://learnxinyminutes.com/docs/yaml/
+#
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+
+title: Kinshuk Vasisht
+email: kinshukv@iisc.ac.in
+description: >- # this means to ignore newlines until "baseurl:"
+  Ph.D. Researcher @ FLAIR, IISc
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://kinshuk-h.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+twitter_username: kinshuk_v
+github_username:  kinshuk-h
+
+# Build settings
+#theme: minima
+
+remote_theme: "jekyll/minima@1e8a445"
+
+plugins:
+  - jekyll-feed
+  - jekyll-remote-theme
+  - jekyll/scholar
+  - jekyll-seo-tag
+
+minima:
+  skin: classic
+  social_links:
+    - title: kinshuk-h
+      icon: github
+      url: "https://github.com/kinshuk-h"
+    - title: kinshuk_v
+      icon: x-twitter
+      url: "https://x.com/kinshuk_v"
+    - title: kinshuk-vasisht
+      icon: linkedin
+      url: https://www.linkedin.com/in/kinshuk-vasisht-a35084153
+  hide_site_feed_link: true
+  show_excerpts: false
+
+include: [ '_pages' ]
+
+kramdown:
+   input: GFM
+
+author:
+  name: Kinshuk Vasisht
+  email: kinshukv@iisc.ac.in
+
+scholar:
+  last_name: [Vasisht]
+  first_name: [Kinshuk]
+  sort_by: year,month
+  order: descending
+  group_by: year
+  group_order: descending
+  bibliography_template: bibitem
+
+filtered_bibtex_keywords:
+  [
+    abbr,
+    abstract,
+    additional_info,
+    altmetric,
+    annotation,
+    arxiv,
+    award,
+    award_name,
+    bibtex_show,
+    blog,
+    code,
+    google_scholar_id,
+    html,
+    inspirehep_id,
+    pdf,
+    poster,
+    pitch,
+    preview,
+    img,
+    selected,
+    slides,
+    supp,
+    video,
+    website,
+  ]
+
+# Exclude from processing.
+# The following items will not be processed, by default.
+# Any item listed under the `exclude:` key here will be automatically added to
+# the internal "default list".
+#
+# Excluded items can be processed by explicitly listing the directories or
+# their entries' file path in the `include:` list.
+#
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/

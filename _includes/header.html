@@ -1,0 +1,19 @@
+{%- assign default_paths = site.pages | map: "path" -%}
+{%- assign page_paths = site.minima.nav_pages | default: default_paths -%}
+{%- assign page_titles = site.pages | map: 'title' | compact %}
+
+<header class="site-header">
+  <div class="wrapper">
+    {%- unless page_titles == empty %}
+      <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-transparent">
+        <a class="navbar-brand site-title py-0" rel="author" href="{{ '/' | relative_url }}">{{ site.title | escape }}</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNav" aria-controls="siteNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="siteNav">
+            {% include nav-items.html paths = page_paths %}
+        </div>
+      </nav>
+    {%- endunless %}
+  </div>
+</header>
