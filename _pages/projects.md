@@ -19,7 +19,7 @@ Some tutorials I've created while being a teaching assistant for various courses
                     <i class="bi bi-file-earmark-slides"></i> Slides
                 </a>
                 <span>/</span>
-                <a href="https://github.com/kinshuk-h/tutorials/pytorch.ipynb" class="btn link btn-sm z-depth-0">
+                <a href="https://github.com/kinshuk-h/tutorials/blob/main/pytorch.ipynb" class="btn link btn-sm z-depth-0">
                     <i class="bi bi-github"></i> Notebook
                 </a>
                 <span>/</span>
@@ -45,7 +45,7 @@ Some projects I've enjoyed working on:
                     <i class="bi bi-github"></i> GitHub
                 </a>
                 <span>/</span>
-                <a href="https://github.com/kinshuk-h/LT-Crawler/tree/main/README.md" class="btn link btn-sm z-depth-0">
+                <a href="https://github.com/kinshuk-h/LT-Crawler/blob/main/README.md" class="btn link btn-sm z-depth-0">
                     <i class="bi bi-github"></i> Homepage
                 </a>
             </div>
