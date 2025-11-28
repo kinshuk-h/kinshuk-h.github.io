@@ -1,0 +1,36 @@
+{% assign proj = include.project %}
+{% assign github_url = site.github_username | prepend: "https://github.com/" | append: "/" %}
+
+{% if proj.code contains "://" %}
+    {% assign proj_code = proj.code %}
+    {% assign code_icon = proj.code_icon or "bi-github" %}
+{% else %}
+    {% assign proj_code = proj.code | prepend: github_url %}
+    {% assign code_icon = "bi-github" %}
+{% endif %}
+
+{% if proj.page %}
+    {% assign proj_page = proj.page %}
+    {% assign page_icon = "bi-globe" %}
+{% elsif proj_code contains "github" %}
+    {% assign proj_page = proj_code | append: "/blob/main/README.md" %}
+    {% assign page_icon = "bi-github" %}
+{% endif %}
+
+<div class="col-sm-6 mb-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title mt-1">{{ proj.name }}</h5>
+            <p class="card-text">{{ proj.desc }}</p>
+            <a href="{{ proj_code }}" class="btn link btn-sm z-depth-0">
+                <i class="bi {{ code_icon }}"></i> Code
+            </a>
+            {% if proj_page %}
+                <span>/</span>
+                <a href="{{ proj_page }}" class="btn link btn-sm z-depth-0">
+                    <i class="bi {{ page_icon }}"></i> Homepage
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>

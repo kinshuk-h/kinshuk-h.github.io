@@ -1,0 +1,16 @@
+- name: autoval
+  desc: >-
+    Unittest-based auto-grading utility for assignments.
+    Relieves TA burden by 50%. <sup>(citation needed)</sup>
+  code: autoval
+- name: Legal Text Crawler
+  desc: >-
+    A scraper for collating unlabeled data from the website
+    of Indian courts, for use in legal NLP tasks.
+  code: LT-Crawler
+- name: FileSystem Operations
+  desc: >-
+    A C++ utility to demonstrate various filesystem syscalls.
+    Includes a standalone argument parser.
+  code: fsop
+  page: /fsop

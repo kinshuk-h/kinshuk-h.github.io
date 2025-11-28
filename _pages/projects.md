@@ -36,34 +36,7 @@ Some tutorials I've created while being a teaching assistant for various courses
 Some projects I've enjoyed working on:
 
 <div class="row pubitem">
-    <div class="col-sm-6 mb-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title mt-1">Legal Text Crawler</h5>
-                <p class="card-text">A scraper for collating unlabeled data from the website of Indian courts, for use in legal NLP tasks.</p>
-                <a href="https://github.com/kinshuk-h/LT-Crawler" class="btn link btn-sm z-depth-0">
-                    <i class="bi bi-github"></i> GitHub
-                </a>
-                <span>/</span>
-                <a href="https://github.com/kinshuk-h/LT-Crawler/blob/main/README.md" class="btn link btn-sm z-depth-0">
-                    <i class="bi bi-github"></i> Homepage
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 mb-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title mt-1">FileSystem Operations</h5>
-                <p class="card-text">A C++ utility to demonstrate various filesystem syscalls. Includes a standalone argument parser.</p>
-                <a href="https://github.com/kinshuk-h/fsop" class="btn link btn-sm z-depth-0">
-                    <i class="bi bi-github"></i> GitHub
-                </a>
-                <span>/</span>
-                <a href="/fsop" class="btn link btn-sm z-depth-0">
-                    <i class="bi bi-globe"></i> Homepage
-                </a>
-            </div>
-        </div>
-    </div>
+    {%for project in site.data.projects %}
+        {% include projitem.liquid project=project %}
+    {%endfor%}
 </div>
